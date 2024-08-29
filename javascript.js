@@ -1,3 +1,9 @@
+let num1 = "";
+let operator = "";
+let num2 = "";
+let displayValue = "";
+let isResultDisplayed = false;
+
 const add = function (a, b) {
   return a + b;
 };
@@ -11,13 +17,12 @@ const multiply = function (a, b) {
 };
 
 const divide = function (a, b) {
-  return a / b;
+  if (b === 0) {
+    return "Error";
+  } else {
+    return a / b;
+  }
 };
-
-let num1 = "";
-let operator = "";
-let num2 = "";
-let displayValue = "";
 
 function operate(num1, operator, num2) {
   switch (operator) {
@@ -29,12 +34,13 @@ function operate(num1, operator, num2) {
       return multiply(num1, num2);
     case "/":
       return divide(num1, num2);
+    default:
+      return null;
   }
 }
 
 function updateDisplay(value) {
-  displayValue += value;
-  document.getElementById("display").innerText = displayValue;
+  document.getElementById("display").innerText = value;
 }
 
 function clearDisplay() {
@@ -42,36 +48,58 @@ function clearDisplay() {
   operator = "";
   num2 = "";
   displayValue = "";
-  document.getElementById("display").innerText = "0";
+  isResultDisplayed = false;
+  updateDisplay("0");
 }
 
 document.querySelectorAll(".num").forEach((button) => {
   button.addEventListener("click", function () {
+    if (isResultDisplayed) {
+      clearDisplay();
+      isResultDisplayed = false;
+    }
+
     if (operator === "") {
       num1 += button.innerText;
-      updateDisplay(button.innerText);
+      displayValue = num1;
     } else {
       num2 += button.innerText;
-      updateDisplay(button.innerText);
+      displayValue = num2;
     }
+    updateDisplay(displayValue);
   });
 });
 
 document.querySelectorAll(".oper").forEach((button) => {
   button.addEventListener("click", function () {
-    if (button.innerText === "C") {
+    const oper = button.innerText;
+
+    if (oper === "C") {
       clearDisplay();
-    } else if (button.innerText === "=") {
+    } else if (oper === "=") {
       if (num1 && operator && num2) {
         const result = operate(Number(num1), operator, Number(num2));
-        clearDisplay();
         updateDisplay(result);
         num1 = result.toString();
+        num2 = "";
+        operator = "";
+        isResultDisplayed = true;
       }
     } else {
-      if (num1) {
-        operator = button.innerText;
-        updateDisplay(" " + operator + " ");
+      if (isResultDisplayed) {
+        isResultDisplayed = false;
+      }
+
+      if (num1 && !operator) {
+        operator = oper;
+      } else if (operator && num2) {
+        num1 = operate(Number(num1), operator, Number(num2)).toString();
+        operator = oper;
+        num2 = "";
+        displayValue = num1;
+        updateDisplay(displayValue);
+      } else if (num1 && operator && !num2) {
+        operator = oper;
       }
     }
   });
