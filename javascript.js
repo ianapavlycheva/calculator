@@ -38,6 +38,7 @@ function operate(num1, operator, num2) {
     default:
       return null;
   }
+  return Math.round(result * 1e10) / 1e10;
 }
 
 function updateDisplay(value) {
