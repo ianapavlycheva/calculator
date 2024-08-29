@@ -26,6 +26,7 @@ const divide = function (a, b) {
 };
 
 function operate(num1, operator, num2) {
+  let result;
   switch (operator) {
     case "+":
       return add(num1, num2);
