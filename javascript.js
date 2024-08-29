@@ -3,6 +3,7 @@ let operator = "";
 let num2 = "";
 let displayValue = "";
 let isResultDisplayed = false;
+let isDecimalAdded = false;
 
 const add = function (a, b) {
   return a + b;
@@ -51,6 +52,25 @@ function clearDisplay() {
   isResultDisplayed = false;
   updateDisplay("0");
 }
+
+document.querySelector(".dec").addEventListener("click", function () {
+  if (isResultDisplayed) {
+    clearDisplay();
+    isResultDisplayed = false;
+  }
+
+  if (!isDecimalAdded) {
+    if (operator === "") {
+      num1 += ".";
+      displayValue = num1;
+    } else {
+      num2 += ".";
+      displayValue = num2;
+    }
+    updateDisplay(displayValue);
+    isDecimalAdded = true;
+  }
+});
 
 document.querySelectorAll(".num").forEach((button) => {
   button.addEventListener("click", function () {
@@ -101,6 +121,7 @@ document.querySelectorAll(".oper").forEach((button) => {
       } else if (num1 && operator && !num2) {
         operator = oper;
       }
+      isDecimalAdded = false;
     }
   });
 });
