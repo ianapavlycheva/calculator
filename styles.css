@@ -44,3 +44,11 @@ button {
 button:active {
   background-color: #979696;
 }
+
+#C {
+  flex: 69%;
+}
+
+.dec {
+  flex: 50%;
+}
