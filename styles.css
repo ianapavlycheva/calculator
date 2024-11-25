@@ -39,10 +39,23 @@ button {
   border: 1px solid #3d3b3b;
   padding: 10px 20px;
   font-size: 1.5em;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 button:active {
   background-color: #979696;
+  transform: scale(0.95);
+}
+
+button:hover {
+  background-color: #7c7f7c;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 2px solid #bfac84;
+  outline-offset: 2px;
 }
 
 #C {
